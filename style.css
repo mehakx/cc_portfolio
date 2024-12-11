@@ -1,0 +1,45 @@
+body{
+    text-align: left;
+    color:lightseagreen;
+    font-size:20px;
+    background-color: black
+
+}
+
+img{
+    border:2px solid black;
+    border-radius:10px;
+    width: 650px; 
+    height: 550px;
+    
+      
+    
+
+}
+
+@keyframes colorChange {
+    0% { color:lightcoral; }
+    50% { color: lightgray; }
+    100% { color: lightpink; }
+  }
+  
+  h1 {
+    animation: colorChange 1s infinite;
+  }
+  
+
+h1{
+    text-align: left;
+    font-weight:bold;
+    color:lightcoral;
+}
+
+a{
+    color:lightcyan;
+    text-decoration:none;
+
+}
+
+a:hover{
+    color:lightgreen;
+}
