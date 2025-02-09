@@ -1,5 +1,4 @@
-
-/* all buttons styling and alignment:  */
+/* all buttons styling and alignment: */
 a {
   color: #fff; /* White */
   font-weight: bold;
@@ -9,30 +8,30 @@ a {
   border-radius: 5px;
   transition: 0.3s;
 }
+
 a:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* format for the first page: home.html  */
+/* format for the first page: home.html */
 #landing {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   background-color: whitesmoke;
   position: relative;
-  
 }
 
-/* format for the first page: home.html  */
+/* format for the first page: home.html */
 #landing h1 {
   font-size: 3em;
   margin: 0;
   animation: fadeIn 2s ease-in-out;
 }
 
-/* format for the first page: home.html button:  */
+/* format for the first page: home.html button */
 #landing .scroll-btn {
   margin-top: 20px;
   padding: 10px 20px;
@@ -43,12 +42,11 @@ a:hover {
   transition: background 0.3s;
 }
 
-/* format for the first page: home.html button:  */
 #landing .scroll-btn:hover {
   background: white;
 }
 
-/* styling for the contact page:  */
+/* styling for the contact page */
 .contact-page {
   display: flex;
   flex-direction: column;
@@ -57,29 +55,27 @@ a:hover {
   height: 100vh;
   margin: 0;
   text-align: center;
-  background: linear-gradient(to right, beige, black); 
+  background: linear-gradient(to right, beige, black);
   background-size: cover;
   background-attachment: fixed;
 }
 
-/* styling for the music page: */
-.music-page{
-
-  h1{
-    color:white
-
-  }
-
-  p{
-    color:white
-  }
+/* styling for the music page */
+.music-page h1 {
+  color: white;
 }
-/* music button styling.  */
-#music a{
+
+.music-page p {
+  color: white;
+}
+
+/* music button styling */
+#music a {
   background: rgba(0, 0, 0, 0.8);
   color: blue;
 }
-/* styling for the universe page: */
+
+/* styling for the universe page */
 .universe-page {
   display: flex;
   flex-direction: column;
@@ -92,37 +88,26 @@ a:hover {
   background-size: cover;
   background-attachment: fixed;
 }
-/* styling for the about page: */
-.about-page{
-  p{
-    font-size: 20px;
-  }
+
+/* styling for the about page */
+.about-page {
   background: url('DSC02093.JPG');
   background-size: cover;
   text-align: left;
   padding: 200px 200px;
   max-width: 3000px;
   margin: auto;
-  display:flex
-  justify-content:left;
+  display: flex;
+  justify-content: left;
   color: white;
- 
- 
 }
 
- 
+.about-page p {
+  font-size: 20px;
+}
 
-/* styling for the projects page: */
-.projects-page{
-  h1 {
-    color: yellow; 
-}
-h2 {
-  color: yellow; 
-}
-p{
-  color: cyan; 
-}
+/* styling for the projects page */
+.projects-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,11 +116,23 @@ p{
   margin: 0;
   text-align: center;
   text-decoration-color: white;
-  background: url('Animation\ -\ 1739062546932.gif') no-repeat center center fixed;
+  background: url('Animation.gif') no-repeat center center fixed;
   background-size: cover;
 }
 
-/* styling for the about page: */
+.projects-page h1 {
+  color: yellow;
+}
+
+.projects-page h2 {
+  color: yellow;
+}
+
+.projects-page p {
+  color: cyan;
+}
+
+/* styling for the about page */
 #about h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -153,12 +150,12 @@ button {
   border-radius: 5px;
   transition: background 0.3s;
 }
-/* Button Styling */
+
 button:hover {
   background: brown;
 }
 
-/* Projects Section styling:  */
+/* Projects Section styling */
 #projects {
   padding: 80px 20px;
 }
@@ -216,8 +213,8 @@ button:hover {
   color: white;
 }
 
-.contact-page{
-  p{
-    font-size: 20px;
+/* styling for the contact page */
+.contact-page p {
+  font-size: 20px;
 }
-}
+
