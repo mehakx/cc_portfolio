@@ -110,21 +110,7 @@ a:hover {
  
 }
 
-  p{
-    font-size: 20px;
-  }
-  background: url('DSC02093.JPG');
-  background-size: cover;
-  text-align: left;
-  padding: 200px 200px;
-  max-width: 3000px;
-  margin: auto;
-  display:flex
-  justify-content:left;
-  color: white;
  
- 
-}
 
 /* styling for the projects page: */
 .projects-page{
