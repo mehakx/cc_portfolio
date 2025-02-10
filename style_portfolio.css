@@ -104,7 +104,7 @@ a:hover {
   max-width: 3000px;
   margin: auto;
   display:flex;
-  justify-content:left;  
+  justify-content:center;  
   color: white;
 }
 
