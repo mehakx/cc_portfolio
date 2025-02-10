@@ -92,43 +92,27 @@ a:hover {
   background-attachment: fixed;
 }
 /* styling for the about page: */
-/* .about-page{
+.about-page{
 
   p{
     font-size: 20px;
   }
+
+} 
+
+.about-page{
+  display:flex;
+  flex-direction:column
+  justify-content:center;
+  align-items:center;
+  text-align:center;
   background: url("image.JPG") no-repeat center center fixed;
-  background-size: cover;
-  text-align: left;
+  background-size: cover
   padding: 200px 200px;
   max-width: 3000px;
   margin: auto;
-  display:flex;
-  justify-content:center;  
   color: white;
-} */
-
-.about-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 100vh;
-    background: url("image.JPG") no-repeat center center fixed;
-    background-size: cover;
-    padding: 50px 20px;
-    color: white;
 }
-
-.about-page p {
-    font-size: 20px;
-    max-width: 800px;
-    text-align: left;
-}
-
-
 /* styling for the projects page: */
 .projects-page{
   h1 {
