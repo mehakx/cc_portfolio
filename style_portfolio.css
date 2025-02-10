@@ -185,7 +185,7 @@ button:hover {
   border: 1px solid lightgoldenrodyellow;
   border-radius: 8px;
   padding: 1rem;
-  background-color: whitesmoke;
+  background-color:navy;
   transition: transform 0.2s, box-shadow 0.2s;
   width: 200px;
   display: flex;
