@@ -97,7 +97,7 @@ a:hover {
   p{
     font-size: 20px;
   }
-  background: url("DSC02093.JPG");
+  background: url("./DSC02093.JPG") no-repeat center center fixed;
   background-size: cover;
   text-align: left;
   padding: 200px 200px;
