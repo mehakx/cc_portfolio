@@ -104,8 +104,8 @@ a:hover {
   display:flex;
   flex-direction:column
   justify-content:center;
-  align-items:center;
-  text-align:center;
+  align-items:left;
+  text-align:left;
   background: url("image.JPG") no-repeat center center fixed;
   background-size: cover
   padding: 200px 200px;
