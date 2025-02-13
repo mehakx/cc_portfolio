@@ -96,20 +96,23 @@ a:hover {
 
   p{
     font-size: 20px;
+    max-width: 1000px;
   }
-  background: url("DSC02093.JPG");
-  background-size: cover;
-  text-align: left;
-  padding: 200px 200px;
-  max-width: 3000px;
-  margin: auto;
-  display:flex
-  justify-content:left;
-  color: white;
- 
- 
-}
 
+} 
+
+.about-page{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  text-align:left;
+  background: url("image.JPG") no-repeat center center fixed;
+  background-size: cover
+  padding: 150px 250px;
+  margin: auto;
+  color: white;
+}
 /* styling for the projects page: */
 .projects-page{
   h1 {
@@ -182,7 +185,7 @@ button:hover {
   border: 1px solid lightgoldenrodyellow;
   border-radius: 8px;
   padding: 1rem;
-  background-color: whitesmoke;
+  background-color:white;
   transition: transform 0.2s, box-shadow 0.2s;
   width: 200px;
   display: flex;
