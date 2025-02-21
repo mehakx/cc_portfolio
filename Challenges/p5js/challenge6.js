@@ -30,7 +30,7 @@ function draw() {
 }
 
 
-//  After reviwing the sin curve, I was able to understand the wave 
+//  After reviwing the sin curve, I did the mathematics a few times to get the movement correct: 
 
 function wavyText(pointsArray) {
   for (let i = 0; i < pointsArray.length; i++) {
