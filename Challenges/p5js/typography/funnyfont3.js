@@ -27,7 +27,7 @@ function setup() {
 
   // I had alot of challenges with this one, as I wanted to generate the particles at random positions before they start moving toward the text shape. Eventually after alot of trial and error and reading more on p5.js I found a way to manipulate this function. 
   for (let i = 0; i < points.length; i++) {
-    _particles[i] = new Particle(random(width), random(height)); // this is to store the random locations of the particles. 
+    particles[i] = new Particle(random(width), random(height)); // this is to store the random locations of the particles. 
   }
 }
 
