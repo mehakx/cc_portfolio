@@ -1,26 +1,25 @@
 
-// this is my emotional journaling cam 
-// basically— it watches the users face (using ml5.js), guesses the users emotion,
-// and adds a little color filter based on how you’re feeling, and then based on that suggests reflection prompts- to make you feel better in some way. 
+// Emotional Processing Meter: The following is the code for my meter- that detects emotion based on one's facial expressions(ML5.JS), and accordingly 
+//tries to get the user to open up and process their feelings through online journal prompts. 
+//Hence it adds a little color filter based on how you’re feeling, and then based on that suggests reflection prompts- to make you feel better in some way. 
 
-// ml5 stuff
 let faceMesh;
 let video;
-let allFaces = [];
+let facesNow = [];
 
-// emotion stuff
-let mood = "Neutral"; // default phase
-let lastMood = "Neutral"; // so it can compare if expression changed.
+// deciding the emotion part: 
+let mood = "Neutral"; // default emotional phase
+let prevMood = "Neutral"; // so it can compare if expression changed.
 
-// journaling stuff
-let popupMsg = ""; // the prompt
-let popupTimeLeft = 0; // how long the prompt shows
-let popupFade = 100; 
-let moodThoughts = []; //the responsese that get stored. 
-let showInput = false; // flag for showing the box to type. 
+// journaling part: 
+let promptText = ""; // the prompt
+let promptTimer = 0; // how long the prompt shows
+let promptFade = 100; 
+let moodLogs = []; //the responsese that get stored. 
+let showBox = false; // flag for showing the box to type. 
 
 // for the circular "processing emotions..." 
-let rotationOffset = 0;
+let swirlOffset = 0;
 
 function setup() {
   createCanvas(700, 700);
@@ -30,9 +29,8 @@ function setup() {
   video.size(700, 700);
   video.hide(); // does not show it raw.
 
-  //  loads the ml5 facemesh model
-  // basically looks at the users face and then gives me all the keypoints
-  faceMesh = ml5.faceMesh(video, whenModelIsReady);
+  //  loads the ml5 facemesh model- which looks at the users face and then gives all the keypoints
+  faceMesh = ml5.faceMesh(video, modelReady);
 
   // setting colorMode to HSB so it's easier to do mood filters
   colorMode(HSB, 360, 100, 100, 100);
@@ -46,21 +44,23 @@ function setup() {
   inputField.hide();
 
   // when the user enters something into the journal box
-  inputField.changed(() => {
-    moodThoughts.push({
+  inputField.changed(() =>//I learnt this newly through "https://dev.to/hannahgooding/vs-code-shortcuts-and-tricks-that-i-wish-i-knew-sooner-3mcj"
+  //  wherein this symbol is used to write functions in shorter ways//
+   {
+    moodLogs.push({
       mood,
       thought: inputField.value(),
       time: new Date().toLocaleString()
     });
     inputField.value('');
     inputField.hide();
-    showInput = false;
+    showBox = false;
   });
 }
 
-function whenModelIsReady() {
+function modelReady() {
   //this is an indication that the model is ready!
-  faceMesh.detectStart(video, whenFacesCome);
+  faceMesh.detectStart(video, gotFaces);
 }
 
 function draw() {
@@ -76,21 +76,21 @@ function draw() {
   strokeWeight(20); // border
   image(video, 0, 0, width, height); // webcam live feed
 
-  addMoodFilter();        //  emotional tint on top
-  showMoodEmoji();        // shows little emoji in top corner
-  drawProcessingSpinner(); //  spinning “processing emotions...” text circle
-  moodPopup();            // popup with journal box
+  showMoodTint();        //  emotional tint on top
+  dropEmoji();           // shows little emoji in top corner
+  drawSwirlText();       //  spinning “processing emotions...” text circle
+  handlePrompt();        // popup with journal box
 }
 
-function whenFacesCome(results) {
-  allFaces = results;
-  if (allFaces.length > 0) {
-    detectMood(allFaces[0]); // just looks at the first face for now
+function gotFaces(results) {
+  facesNow = results;
+  if (facesNow.length > 0) {
+    readMood(facesNow[0]); // just looks at the first face for now
   }
 }
 
-function detectMood(face) {
-//this is how I calculate it: 
+function readMood(face) {
+  //this is how I calculate it: 
   // open mouth = probably smiling
   // tiny mouth = possibly sad
   // in between = neutral face
@@ -112,13 +112,13 @@ function detectMood(face) {
   }
 
   // if mood changed → show popup!
-  if (mood !== lastMood) {
-    launchPopup(mood);
-    lastMood = mood;
+  if (mood !== prevMood) {
+    launchPrompt(mood);
+    prevMood = mood;
   }
 }
 
-function addMoodFilter() {
+function showMoodTint() {
   // this is inspired by a project I did during my sophomore year first semester!!
   // we learnt about color theory + lerp and how moods = colors
   // here I'm not lerping, but I'm applying soft emotional HSB tints
@@ -134,10 +134,10 @@ function addMoodFilter() {
   }
 
   fill(moodColor);
-  rect(0, 0, width, height); // lay the color on top of the video
+  rect(0, 0, width, height); // to lay the color on top of the video
 }
 
-function showMoodEmoji() {
+function dropEmoji() {
   // mood = emoji in the corner 
   textSize(64);
   let icon = "😶"; // default neutral
@@ -146,49 +146,49 @@ function showMoodEmoji() {
   text(icon, 20, 20);
 }
 
-function launchPopup(currentMood) {
+function launchPrompt(currentMood) {
   // changes the question depending on how you’re doing
   if (currentMood === "Happy") {
-    popupMsg = "You're smiling! What made you happy?";
+    promptText = "You're smiling! What made you happy?";
   } else if (currentMood === "Sad") {
-    popupMsg = "You seem sad. Want to reflect?";
+    promptText = "You seem sad. Want to reflect?";
   } else {
-    popupMsg = "Feeling neutral — what's on your mind?";
+    promptText = "Feeling neutral — what's on your mind?";
   }
 
-  popupTimeLeft = 180; // shows it for a bit
-  popupFade = 100;
-  showInput = true;
+  promptTimer = 180; // shows it for a little bit
+  promptFade = 100;
+  showBox = true;
   inputField.show();
   inputField.value('');
 }
 
-function moodPopup() {
+function handlePrompt() {
   // draws the popup and lets you reflect if you want
-  if (popupTimeLeft > 0 || showInput) {
-    fill(0, 0, 100, popupFade); // white background
+  if (promptTimer > 0 || showBox) {
+    fill(0, 0, 100, promptFade); // white background
     rect(30, height - 100, width - 60, 60, 12);
 
-    fill(0, 0, 0, popupFade); // black text
+    fill(0, 0, 0, promptFade); // black text
     textSize(16);
-    text(popupMsg, 45, height - 85);
+    text(promptText, 45, height - 85);
 
-    if (!showInput) popupTimeLeft--;
-    if (popupTimeLeft < 30 && !showInput) {
-      popupFade = map(popupTimeLeft, 0, 30, 0, 100); // fade out
-      if (popupTimeLeft <= 0) {
+    if (!showBox) promptTimer--;
+    if (promptTimer < 30 && !showBox) {
+      promptFade = map(promptTimer, 0, 30, 0, 100); // fade out
+      if (promptTimer <= 0) {
         inputField.hide();
-        showInput = false;
+        showBox = false;
       }
     }
   }
 }
 
-// this draws a spinning circle that says "processing emotions..."
-function drawProcessingSpinner() {
+// this draws a spinning circle that says "processing emotions..- i mostly did this as a more fun and indirect way to show the way we all process our emotions. "
+function drawSwirlText() {
   push();
   translate(width / 2, height / 2); // center of canvas
-  rotate(radians(rotationOffset));
+  rotate(radians(swirlOffset));
   fill(0); // black text
   textSize(12);
   textAlign(CENTER, CENTER);
@@ -211,5 +211,5 @@ function drawProcessingSpinner() {
   }
 
   pop();
-  rotationOffset += 0.3; // keeps it spinning
+  swirlOffset += 0.3; // keeps it spinning
 }
