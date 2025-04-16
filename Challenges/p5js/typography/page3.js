@@ -1,3 +1,5 @@
+
+// Most of my HTML Pages contain similar structures, and use the same references throughout:
 // loads saved quiz answers from localStorage, or start with an empty object if none exist.
 // Reference: MDN localStorage API – https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 let answers = JSON.parse(localStorage.getItem('answers') || '{}');

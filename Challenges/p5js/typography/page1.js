@@ -1,4 +1,4 @@
-// To load saved answers from localStorage so the quiz can pick up where the user left off.
+// To load saved answers from localStorage so that quiz can pick up from the previous questions. 
 // If there’s nothing saved yet, then it defaults to an empty object.
 // Reference: MDN localStorage API – https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 let answers = JSON.parse(localStorage.getItem('answers') || '{}');
