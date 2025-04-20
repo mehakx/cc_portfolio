@@ -1,4 +1,4 @@
-// First, I check localStorage to see if there's already progress saved.
+// First, I checked localStorage to see if there's already progress saved.
 // This way the quiz can pick up where the user left off if they refresh or return.
 // If nothing is saved, I default to an empty object.
 let answers = JSON.parse(localStorage.getItem('answers') || '{}');
