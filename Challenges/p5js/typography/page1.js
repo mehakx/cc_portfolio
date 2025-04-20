@@ -3,12 +3,14 @@
 // Reference: MDN localStorage API – https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 let answers = JSON.parse(localStorage.getItem('answers') || '{}');
 
-// This is the main container for the quiz UI.
-let frame;
 
 function setup() {
   // created a DIV to wrap the entire quiz, center it, and give it some padding and a border.
   // Using p5.js createDiv() for quick DOM insertion. Reference: p5.js DOM library – https://p5js.org/reference/#/p5/createDiv
+    // Always reset progress when starting the quiz
+    localStorage.removeItem('answers');
+    answers = {};
+  
   frame = createDiv().parent(document.body)
     .style('border', '3px solid gray')
     .style('padding', '10px')

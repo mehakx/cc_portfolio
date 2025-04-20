@@ -1,87 +1,150 @@
-// Most of my HTML Pages contain similar structures, and use the same references throughout:
-// To load saved answers from localStorage so the quiz can pick up where the user left off.
-// If there’s nothing saved yet, then it defaults to an empty object.
-// Reference: MDN localStorage API – https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
 let answers = JSON.parse(localStorage.getItem('answers') || '{}');
-
-// This is the main container for the quiz UI.
 let frame;
+let hearts = [];
 
 function setup() {
-  // created a DIV to wrap the entire quiz, center it, and give it some padding and a border.
-  // Using p5.js again to createDiv() for quick DOM insertion. Reference: p5.js DOM library – https://p5js.org/reference/#/p5/createDiv
-  frame = createDiv().parent(document.body)
-    .style('border', '3px solid gray')
-    .style('padding', '10px')
-    .style('max-width', '500px')
-    .style('margin', '20px auto');
-
-  // Added the quiz title at the top for page 2 of 4.
-  createElement('h1', 'Self‑Love Monitor (2/4)').parent(frame);
-
-  // QUESTION 3: Focus Level
-  //
-  // I wrapped this question in its own DIV (id="q3") so we can hide/show it easily.
-  let d3 = createDiv().parent(frame).id('q3');
-  createP('3. Focus: High, Medium, Low').parent(d3);
-
-  // I wanted to alter the style of the buttons and so decided to create a radio button
-  // styl and store it in createRadio():
-  // Reference: p5.js createRadio – https://p5js.org/reference/#/p5/createRadio
-  let r = createRadio().parent(d3);
-  ['High', 'Medium', 'Low'].forEach(o => r.option(o));
-
-  // pre-select the previously saved answer if there is one
-  if (answers.q3) {
-    r.selected(answers.q3);
-  }
-
-  // navigation buttons for Q3
-  let nav3 = createDiv().parent(d3);
-  createButton('← Back').parent(nav3)
-    .mousePressed(() => window.location.href = 'page1.html');
-  createButton('Next →').parent(nav3)
-    .mousePressed(() => {
-      // Saves the selected focus level to answers.q3 and follows through to localStorage
-      answers.q3 = r.value();
-      localStorage.setItem('answers', JSON.stringify(answers));
-      // hides Q3 and reveal Q4
-      d3.hide();
-      showQ4();
-    });
-
-  // QUESTION 4: Social Preference:
-  //
-  // starts hidden; only shows once Q3 is answered.
-  let d4 = createDiv().parent(frame).id('q4').hide();
-  createP('4. Alone or with friends?').parent(d4);
-
-  // navigation buttons & options for Q4
-  let nav4 = createDiv().parent(d4);
-  createButton('← Back').parent(nav4)
-    .mousePressed(() => {
-      // hides Q4 and goes back to Q3
-      d4.hide();
-      d3.show();
-    });
-  ['Alone', 'With friends'].forEach(o => {
-    createButton(o).parent(nav4)
-      .mousePressed(() => {
-        // saves answer, follows through, then navigates to page3.html
-        answers.q4 = o;
-        localStorage.setItem('answers', JSON.stringify(answers));
-        window.location.href = 'page3.html';
+  // Set up animated blue background hearts
+  console.log("p5 setup running 🎨");
+  function setup() {
+    let canvas = createCanvas(windowWidth, windowHeight);
+    canvas.parent(document.body); // 💡 force attach to body
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    canvas.style('z-index', '-1');
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    canvas.style('z-index', '-1');
+  
+    for (let i = 0; i < 50; i++) {
+      hearts.push({
+        x: random(width),
+        y: random(height),
+        size: random(10, 25),
+        speed: random(0.3, 0.8),
+        color: random(['#bbdefb', '#64b5f6', '#42a5f5'])
       });
-  });
-
-  // auto‑skips if Q3 was already answered (e.g. if user refreshed the page)
-  if (answers.q3) {
-    d3.hide();
-    d4.show();
+    }
+  
+    // Quiz frame container
+    frame = createDiv().parent(document.body)
+      .style('background-color', '#ffffffee')
+      .style('border', '2px solid #64b5f6')
+      .style('border-radius', '16px')
+      .style('padding', '30px')
+      .style('max-width', '480px')
+      .style('margin', '60px auto')
+      .style('font-family', 'Comic Sans MS, cursive, sans-serif')
+      .style('box-shadow', '0 6px 18px rgba(100, 181, 246, 0.4)');
+  
+    createElement('h1', '💙 Self‑Love Monitor (2/4)').parent(frame)
+      .style('text-align', 'center')
+      .style('color', '#1e88e5');
+  
+    //
+    // QUESTION 3: Focus
+    //
+    let d3 = createDiv().parent(frame).id('q3');
+    createP('3. Focus: High, Medium, Low').parent(d3).style('font-size', '18px');
+  
+    let r = createRadio().parent(d3).style('margin', '10px').style('font-size', '16px');
+    ['High', 'Medium', 'Low'].forEach(o => r.option(o));
+    if (answers.q3) r.selected(answers.q3);
+  
+    let nav3 = createDiv().parent(d3).style('margin-top', '20px');
+    createButton('← Back').parent(nav3)
+      .style('margin-right', '10px')
+      .style('background-color', '#bbdefb')
+      .style('border', 'none')
+      .style('padding', '8px 16px')
+      .style('border-radius', '6px')
+      .mousePressed(() => window.location.href = 'page1.html');
+  
+    createButton('Next →').parent(nav3)
+      .style('background-color', '#42a5f5')
+      .style('color', '#fff')
+      .style('border', 'none')
+      .style('padding', '8px 16px')
+      .style('border-radius', '6px')
+      .mousePressed(() => {
+        answers.q3 = r.value();
+        localStorage.setItem('answers', JSON.stringify(answers));
+        d3.hide();
+        showQ4();
+      });
+  
+    //
+    // QUESTION 4: Social Preference
+    //
+    let d4 = createDiv().parent(frame).id('q4').hide();
+    createP('4. Alone or with friends?').parent(d4).style('font-size', '18px');
+  
+    let nav4 = createDiv().parent(d4).style('margin-top', '20px');
+  
+    createButton('← Back').parent(nav4)
+      .style('margin-right', '10px')
+      .style('background-color', '#bbdefb')
+      .style('border', 'none')
+      .style('padding', '8px 16px')
+      .style('border-radius', '6px')
+      .mousePressed(() => {
+        d4.hide();
+        d3.show();
+      });
+  
+    ['Alone', 'With friends'].forEach(o => {
+      createButton(o).parent(nav4)
+        .style('margin', '5px')
+        .style('background-color', '#64b5f6')
+        .style('color', '#fff')
+        .style('border', 'none')
+        .style('padding', '10px 15px')
+        .style('border-radius', '10px')
+        .mousePressed(() => {
+          answers.q4 = o;
+          localStorage.setItem('answers', JSON.stringify(answers));
+          window.location.href = 'page3.html';
+        });
+    });
+  
+    // Auto-skip if already answered
+    if (answers.q3) {
+      d3.hide();
+      d4.show();
+    }
   }
-}
+  
+  function showQ4() {
+    select('#q4').show();
+  }
+  
+  function draw() {
+    background('#e3f2fd');
+    noStroke();
+    for (let heart of hearts) {
+      fill(heart.color);
+      drawHeart(heart.x, heart.y, heart.size);
+      heart.y += heart.speed;
+      if (heart.y > height + heart.size) {
+        heart.y = -heart.size;
+        heart.x = random(width);
+      }
+    }
+  }
+  
+  function drawHeart(x, y, s) {
+    beginShape();
+    vertex(x, y);
+    bezierVertex(x - s / 2, y - s / 2, x - s, y + s / 3, x, y + s);
+    bezierVertex(x + s, y + s / 3, x + s / 2, y - s / 2, x, y);
+    endShape(CLOSE);
+  }
+  
+    // Your hearts setup...
+  }
+  
+  
 
-// helper function to un-hide question 4 when Q3 is completed
-function showQ4() {
-  select('#q4').show();
-}
+
+  
