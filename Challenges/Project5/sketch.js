@@ -1,16 +1,12 @@
 
 function setup() {
-  
     noCanvas();
-
-   
-   
     const container = createDiv()
       .parent(document.body)
       .id('oracle-ui');
   
     // Added a friendly title at the top. The little crystal-ball emoji sets the mood :)  
-    createElement('h2', '🔮 Iron Oracle')
+    createElement('h2', '🔮 Mood Oracle')
       .parent(container);
   
     // A simple prompt to ask the user how they're feeling in one word.
@@ -18,13 +14,13 @@ function setup() {
       .parent(container);
   
     // Then to create a text input for the mood. I set a placeholder to guide the user,
-    // and I give it an ID so I can grab its value later.
+    // and I gave it an ID so I can grab its value later.
     const inp = createInput()
       .attribute('placeholder', 'e.g. anxious')
       .parent(container)
       .id('mood');
   
-    // This button triggers our advice lookup when clicked.
+    // This button triggers the advice lookup when clicked.
     // I also give it an ID in case I want to style or reference it directly.
     const btn = createButton('See Oracle')
       .parent(container)
@@ -36,7 +32,7 @@ function setup() {
       .id('loading')
       .hide();  // start hidden
   
-    // this is where we'll display the oracle's advice. Italic style makes it look a bit mystical.
+    // this is to display the oracle's advice. After some experimentation I saw that the italic style makes it look a bit mystical!
     const adviceP = createP('')
       .parent(container)
       .id('advice')
@@ -45,13 +41,13 @@ function setup() {
     // Then I used .remove item to clear any previous session data—this ensures a fresh start every time the page loads.
     localStorage.removeItem('oracle');
   
-    // when the user clicks “See Oracle,” run through the advice-fetching flow.
+    // when the user clicks “See Oracle,” it runs through the advice-fetching flow.
     btn.mousePressed(() => {
     
       const mood = inp.value().trim();
       if (!mood) return;
   
-      // Clear any old advice text and show the loading indicator.
+      // clears any old advice text and show the loading indicator.
       adviceP.html('');
       loading.show();
   
@@ -99,8 +95,5 @@ function setup() {
     });
   }
   
-  function draw() {
-    // Intentionally left empty—no graphics to render here!\
-
-  }
+ 
   
