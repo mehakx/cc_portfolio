@@ -591,3 +591,4 @@ function displayError() {
   loadingIndicator.hide();
   adviceParagraph.html('😕 Something went wrong.'); // Simple error message with emoji
 }
+
