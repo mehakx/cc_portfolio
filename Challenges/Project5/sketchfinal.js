@@ -1,3 +1,6 @@
+//Proposal Link: https://docs.google.com/document/d/1lyU9Tkgpa8mFW23-YxChYCL7B_xsOATzEWrK35b4jvc/edit?usp=sharing
+//Protoytpe Link: https://mehakx.github.io/cc_portfolio/Challenges/Project5/index.html
+
 // — Cosmic Mood Oracle —
 // This is my attempt at creating a mystical, cosmic-themed mood advice
 // generator. Started with a basic design then kept adding cool visual effects
@@ -13,14 +16,14 @@
 let inputMood, buttonAsk, loadingIndicator, adviceParagraph;
 
 function setup() {
-    initUI(); // Create all the UI elements with cosmic styling
+    initUI(); // Created all the UI elements with cosmic styling
     clearPreviousSession(); // Clear previous session data for a fresh start
     buttonAsk.mousePressed(fetchAdvice); // Set up button click event
 }
   
 function draw() {
     // No draw loop needed - this is a static UI with CSS animations
-    // I decided against using p5's animation loop to save resources
+    
 }
   
 // Build the user interface with a dark, neon-glow style
@@ -547,7 +550,7 @@ function createConstellation(parent, index) {
         .style('opacity', '0.6')
         .style('animation', `pulse ${random(4, 8)}s infinite ${random(0, 3)}s`);
     }
-} // <— Closed createConstellation
+} //Closed createConstellation
 
 // Clear previous session data - fresh start every time
 function clearPreviousSession() {
